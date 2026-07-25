@@ -23,17 +23,16 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pyinstaller pygame
-        if [ -f minecraft_pet/requirements.txt ]; then pip install -r minecraft_pet/requirements.txt; fi
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     - name: Build macOS App with PyInstaller
-      working-directory: ./minecraft_pet
       run: |
         pyinstaller --windowed --noconfirm --add-data "assets:assets" --add-data "sounds:sounds" pet_app.py
 
     - name: Prepare DMG Contents
       run: |
         mkdir dmg_staging
-        cp -r minecraft_pet/dist/pet_app.app dmg_staging/
+        cp -r dist/pet_app.app dmg_staging/
         ln -s /Applications dmg_staging/Applications
 
     - name: Create DMG package
@@ -63,10 +62,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pyinstaller pygame
-        if (Test-Path minecraft_pet/requirements.txt) { pip install -r minecraft_pet/requirements.txt }
+        if (Test-Path requirements.txt) { pip install -r requirements.txt }
 
     - name: Build EXE with PyInstaller
-      working-directory: ./minecraft_pet
       run: |
         pyinstaller --onefile --windowed --noconfirm --add-data "assets;assets" --add-data "sounds;sounds" pet_app.py
 
@@ -74,4 +72,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: MinecraftPet-Windows-EXE
-        path: minecraft_pet/dist/pet_app.exe
+        path: dist/pet_app.exe
