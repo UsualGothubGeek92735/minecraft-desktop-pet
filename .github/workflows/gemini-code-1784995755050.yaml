@@ -21,7 +21,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pyinstaller create-dmg
+        pip install pyinstaller
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     - name: Build macOS App with PyInstaller
@@ -30,11 +30,7 @@ jobs:
 
     - name: Create DMG package
       run: |
-        create-dmg \
-          --volname "Minecraft Desktop Pet" \
-          --sandbox-safe \
-          "MinecraftPet.dmg" \
-          "dist/pet_app.app"
+        hdiutil create -volname "Minecraft Desktop Pet" -srcfolder dist/pet_app.app -ov -format UDZO MinecraftPet.dmg
 
     - name: Upload DMG Artifact
       uses: actions/upload-artifact@v4
