@@ -32,11 +32,9 @@ jobs:
       run: |
         create-dmg \
           --volname "Minecraft Desktop Pet" \
-          --window-size 500 300 \
-          --icon-size 100 \
-          --app-drop-link 350 125 \
+          --sandbox-safe \
           "MinecraftPet.dmg" \
-          "dist/pet_app.app" || true
+          "dist/pet_app.app"
 
     - name: Upload DMG Artifact
       uses: actions/upload-artifact@v4
